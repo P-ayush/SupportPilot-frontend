@@ -32,7 +32,6 @@ export default function ChatPage() {
     const fetchHistory =
         async () => {
             try {
-
                 const response =
                     await chatHistory(
                         organizationId
@@ -79,62 +78,79 @@ export default function ChatPage() {
         };
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
 
-            <h1>
-                Chat
-            </h1>
+            <div className="mx-auto max-w-4xl p-6">
 
-            <div>
-                {
-                    messages.map(
-                        (message) => (
-                            <div
-                                key={message.id}
-                            >
-                                <strong>
-                                    {message.role}
-                                </strong>
+                <h1 className="mb-6 text-3xl font-bold">
+                    AI Chat
+                </h1>
 
-                                <p>
-                                    {message.content}
-                                </p>
+                <div className="mb-4 h-[600px] overflow-y-auto rounded-lg bg-white p-4 shadow">
 
-                                <hr />
-                            </div>
-                        )
-                    )
-                }
-            </div>
-
-            <div>
-
-                <input
-                    type="text"
-                    value={question}
-                    placeholder="Ask a question..."
-                    onChange={(e) =>
-                        setQuestion(
-                            e.target.value
-                        )
-                    }
-                />
-
-                <button
-                    onClick={handleSend}
-                    disabled={loading}
-                >
                     {
-                        loading
-                            ? "Thinking..."
-                            : "Send"
+                        messages.map(
+                            (message) => (
+                                <div
+                                    key={message.id}
+                                    className={`mb-4 flex ${message.role === "user"
+                                            ? "justify-end"
+                                            : "justify-start"
+                                        }`}
+                                >
+
+                                    <div
+                                        className={`max-w-[70%] rounded-lg p-3 ${message.role === "user"
+                                                ? "bg-blue-600 text-white"
+                                                : "bg-gray-200 text-black"
+                                            }`}
+                                    >
+                                        <p className="mb-1 text-xs font-semibold uppercase">
+                                            {message.role}
+                                        </p>
+
+                                        <p>
+                                            {message.content}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            )
+                        )
                     }
-                </button>
+
+                </div>
+
+                <div className="flex gap-2">
+
+                    <input
+                        type="text"
+                        value={question}
+                        placeholder="Ask a question..."
+                        onChange={(e) =>
+                            setQuestion(
+                                e.target.value
+                            )
+                        }
+                        className="flex-1 rounded-lg border p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+
+                    <button
+                        onClick={handleSend}
+                        disabled={loading}
+                        className="rounded-lg bg-blue-600 px-6 text-white hover:bg-blue-700 disabled:opacity-50"
+                    >
+                        {
+                            loading
+                                ? "Thinking..."
+                                : "Send"
+                        }
+                    </button>
+
+                </div>
 
             </div>
-<h1 className="text-4xl font-bold text-green-500">
-    Hello Tailwind
-</h1>
+
         </div>
     );
 }

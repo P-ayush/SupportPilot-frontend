@@ -98,84 +98,108 @@ export default function OrganizationPage() {
         };
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
+            <div className="mx-auto max-w-4xl p-6">
 
-            <h1>
-                Organization Details
-            </h1>
+                <div className="mb-6">
+                    <h1 className="text-3xl font-bold">
+                        Organization
+                    </h1>
 
-            <p>
-                Organization ID:
-                {organizationId}
-            </p>
+                    <p className="text-gray-600">
+                        ID: {organizationId}
+                    </p>
+                </div>
 
-            <hr />
+                <div className="mb-8 rounded-lg bg-white p-6 shadow">
 
-            <h2>
-                Upload Document
-            </h2>
+                    <h2 className="mb-4 text-xl font-semibold">
+                        Upload Document
+                    </h2>
 
-            <input
-                type="file"
-                onChange={(e) =>
-                    setFile(
-                        e.target.files?.[0]
-                        || null
-                    )
-                }
-            />
+                    <div className="flex gap-3">
 
-            <button
-                onClick={handleUpload}
-                disabled={loading}
-            >
-                {
-                    loading
-                        ? "Uploading..."
-                        : "Upload"
-                }
-            </button>
+                        <input
+                            type="file"
+                            onChange={(e) =>
+                                setFile(
+                                    e.target.files?.[0] ||
+                                    null
+                                )
+                            }
+                            className="flex-1 rounded border p-2"
+                        />
 
-            <hr />
+                        <button
+                            onClick={handleUpload}
+                            disabled={loading}
+                            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                        >
+                            {
+                                loading
+                                    ? "Uploading..."
+                                    : "Upload"
+                            }
+                        </button>
 
-            <h2>
-                Documents
-            </h2>
+                    </div>
 
-            <ul>
-                {
-                    documents.map(
-                        (doc) => (
-                            <li
-                                key={doc.id}
-                            >
+                </div>
+
+                <div className="mb-8 rounded-lg bg-white p-6 shadow">
+
+                    <h2 className="mb-4 text-xl font-semibold">
+                        Documents
+                    </h2>
+
+                    {
+                        documents.length === 0 ? (
+                            <p className="text-gray-500">
+                                No documents uploaded.
+                            </p>
+                        ) : (
+                            <ul className="space-y-3">
+
                                 {
-                                    doc.file_name
+                                    documents.map(
+                                        (doc) => (
+                                            <li
+                                                key={doc.id}
+                                                className="flex items-center justify-between rounded border p-3"
+                                            >
+                                                <span>
+                                                    {doc.file_name}
+                                                </span>
+
+                                                <button
+                                                    onClick={() =>
+                                                        handleDelete(
+                                                            doc.id
+                                                        )
+                                                    }
+                                                    className="rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        )
+                                    )
                                 }
 
-                                <button
-                                    onClick={() =>
-                                        handleDelete(
-                                            doc.id
-                                        )
-                                    }
-                                >
-                                    Delete
-                                </button>
-                            </li>
+                            </ul>
                         )
-                    )
-                }
-            </ul>
+                    }
 
-            <hr />
+                </div>
 
-            <Link
-                href={`/organizations/${organizationId}/chat`}
-            >
-                Open Chat
-            </Link>
+                <Link
+                    href={`/organizations/${organizationId}/chat`}
+                    className="inline-block rounded bg-green-600 px-5 py-3 text-white hover:bg-green-700"
+                >
+                    Open AI Chat
+                </Link>
 
+            </div>
         </div>
     );
 }
