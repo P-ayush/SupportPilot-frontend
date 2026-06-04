@@ -6,6 +6,7 @@ import {
     createChat,
     chatHistory
 } from "../../../services/chat";
+import Navbar from "../../../components/Navbar";
 
 interface Message {
     id: number;
@@ -78,79 +79,82 @@ export default function ChatPage() {
         };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <>
+            <Navbar />
+            <div className="min-h-screen bg-gray-100">
 
-            <div className="mx-auto max-w-4xl p-6">
+                <div className="mx-auto max-w-4xl p-6">
 
-                <h1 className="mb-6 text-3xl font-bold">
-                    AI Chat
-                </h1>
+                    <h1 className="mb-6 text-3xl font-bold">
+                        AI Chat
+                    </h1>
 
-                <div className="mb-4 h-[600px] overflow-y-auto rounded-lg bg-white p-4 shadow">
+                    <div className="mb-4 h-[600px] overflow-y-auto rounded-lg bg-white p-4 shadow">
 
-                    {
-                        messages.map(
-                            (message) => (
-                                <div
-                                    key={message.id}
-                                    className={`mb-4 flex ${message.role === "user"
+                        {
+                            messages.map(
+                                (message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`mb-4 flex ${message.role === "user"
                                             ? "justify-end"
                                             : "justify-start"
-                                        }`}
-                                >
-
-                                    <div
-                                        className={`max-w-[70%] rounded-lg p-3 ${message.role === "user"
-                                                ? "bg-blue-600 text-white"
-                                                : "bg-gray-200 text-black"
                                             }`}
                                     >
-                                        <p className="mb-1 text-xs font-semibold uppercase">
-                                            {message.role}
-                                        </p>
 
-                                        <p>
-                                            {message.content}
-                                        </p>
+                                        <div
+                                            className={`max-w-[70%] rounded-lg p-3 ${message.role === "user"
+                                                ? "bg-blue-600 text-white"
+                                                : "bg-gray-200 text-black"
+                                                }`}
+                                        >
+                                            <p className="mb-1 text-xs font-semibold uppercase">
+                                                {message.role}
+                                            </p>
+
+                                            <p>
+                                                {message.content}
+                                            </p>
+                                        </div>
+
                                     </div>
-
-                                </div>
-                            )
-                        )
-                    }
-
-                </div>
-
-                <div className="flex gap-2">
-
-                    <input
-                        type="text"
-                        value={question}
-                        placeholder="Ask a question..."
-                        onChange={(e) =>
-                            setQuestion(
-                                e.target.value
+                                )
                             )
                         }
-                        className="flex-1 rounded-lg border p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
 
-                    <button
-                        onClick={handleSend}
-                        disabled={loading}
-                        className="rounded-lg bg-blue-600 px-6 text-white hover:bg-blue-700 disabled:opacity-50"
-                    >
-                        {
-                            loading
-                                ? "Thinking..."
-                                : "Send"
-                        }
-                    </button>
+                    </div>
+
+                    <div className="flex gap-2">
+
+                        <input
+                            type="text"
+                            value={question}
+                            placeholder="Ask a question..."
+                            onChange={(e) =>
+                                setQuestion(
+                                    e.target.value
+                                )
+                            }
+                            className="flex-1 rounded-lg border p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+
+                        <button
+                            onClick={handleSend}
+                            disabled={loading}
+                            className="rounded-lg bg-blue-600 px-6 text-white hover:bg-blue-700 disabled:opacity-50"
+                        >
+                            {
+                                loading
+                                    ? "Thinking..."
+                                    : "Send"
+                            }
+                        </button>
+
+                    </div>
 
                 </div>
 
             </div>
-
-        </div>
+        </>
     );
 }
